@@ -1,0 +1,34 @@
+{
+  "Storybook Component": {
+    "scope": "typescriptreact",
+    "prefix": "storybook-component",
+    "body": [
+      "// ${TM_DIRECTORY/^.+\\/(.*)$/$1/}.stories.ts|tsx",
+      "import React from \"react\"",
+      "import { ComponentStory, ComponentMeta } from \"@storybook/react\"",
+      "import {${TM_DIRECTORY/^.+\\/(.*)$/$1/}} from \".\"",
+      "",
+      "//👇 This default export determines where your story goes in the story list",
+      "export default {",
+      "/* 👇 The title prop is optional.",
+      "* See https://storybook.js.org/docs/react/configure/overview#configure-story-loading",
+      "* to learn how to generate automatic titles",
+      "*/",
+      "title: \"${TM_DIRECTORY/^.+\\/(.*)$/$1/}\",",
+      "component: ${TM_DIRECTORY/^.+\\/(.*)$/$1/},",
+      "} as ComponentMeta<typeof ${TM_DIRECTORY/^.+\\/(.*)$/$1/}>",
+      "",
+      "//👇 We create a “template” of how args map to rendering",
+      "const Template: ComponentStory<typeof ${TM_DIRECTORY/^.+\\/(.*)$/$1/}> = (args) => (",
+      "<${TM_DIRECTORY/^.+\\/(.*)$/$1/} {...args}>${1}</${TM_DIRECTORY/^.+\\/(.*)$/$1/}>",
+      ");",
+      "",
+      "export const Default = Template.bind({});",
+      "",
+      "Default.args = {",
+      "/*👇 The args you need here will depend on your component */",
+      "};"
+    ],
+    "description": "Create new storybook component model"
+  }
+}
