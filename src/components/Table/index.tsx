@@ -8,6 +8,7 @@ import {
   TableCell,
   TableSortLabel,
 } from "./styles";
+import { TableProps } from "@mui/material";
 import { TextWithTranslation } from "../../types/index";
 // 𝕋𝕪𝕡𝕖𝕤
 
@@ -55,7 +56,7 @@ export interface TableAction<RowDataType = object> {
   icon: React.ReactNode;
 }
 
-export interface Props<RowDataType = object> {
+export interface Props<RowDataType = object> extends TableProps {
   /**
    * Table configuration array,
    * used to create the header and an array of data
@@ -67,7 +68,12 @@ export interface Props<RowDataType = object> {
 
 // 𝕄𝕒𝕚𝕟
 
-function Table<RowDataType>({ columns, data, actions }: Props<RowDataType>) {
+function Table<RowDataType>({
+  columns,
+  data,
+  actions,
+  ...props
+}: Props<RowDataType>) {
   const skipColumns = () => actions?.length;
 
   const renderHead = () => {
@@ -85,7 +91,7 @@ function Table<RowDataType>({ columns, data, actions }: Props<RowDataType>) {
 
     // Skip action columns
     if (colSpan > 0)
-      headers.push(<TableCell key="skip-actions" colSpan={colSpan} />);
+      headers.push(<TableCell key="header-skip-actions" colSpan={colSpan} />);
 
     return headers;
   };
@@ -129,7 +135,7 @@ function Table<RowDataType>({ columns, data, actions }: Props<RowDataType>) {
 
   return (
     <TableContainer>
-      <StyledTable>
+      <StyledTable {...props}>
         <TableHead>
           <TableRow>{renderHead()}</TableRow>
         </TableHead>
