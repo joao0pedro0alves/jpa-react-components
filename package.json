@@ -2,7 +2,7 @@
   "name": "ui-atlas",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "license": "MIT",
+  "license": "SEE LICENSE ON LICENSE.txt",
   "scripts": {
     "storybook": "start-storybook - p 8080"
   },
