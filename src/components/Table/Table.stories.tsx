@@ -25,8 +25,23 @@ const Template: ComponentStory<typeof Table> = (args) => <Table {...args} />;
 
 export const Default = Template.bind({});
 
+const data: Dev[] = [
+  { name: "João Pedro", occupation: "Web programmer", frameworks: ["React"] },
+  { name: "Samuel", occupation: "Web programmer", frameworks: ["React"] },
+  {
+    name: "Leandro",
+    occupation: "programmer",
+    frameworks: ["React", "Rails"],
+  },
+  { name: "Wemerson", occupation: "programmer", frameworks: ["Delphi"] },
+  { name: "Marcelo", occupation: "programmer", frameworks: ["Delphi"] },
+  { name: "Djony", occupation: "programmer", frameworks: ["Delphi"] },
+];
+
 Default.args = {
   /*👇 The args you need here will depend on your component */
+  defaultSortField: "name",
+  count: data.length,
   columns: [
     { field: "name", title: "Name" },
     { field: "occupation", title: "Occupation" },
@@ -52,22 +67,13 @@ Default.args = {
       },
     },
   ],
-  data: [
-    { name: "João Pedro", occupation: "Web programmer", frameworks: ["React"] },
-    { name: "Samuel", occupation: "Web programmer", frameworks: ["React"] },
-    {
-      name: "Leandro",
-      occupation: "programmer",
-      frameworks: ["React", "Rails"],
-    },
-    { name: "Wemerson", occupation: "programmer", frameworks: ["Delphi"] },
-  ],
+  data,
   actions: [
     {
       icon: <Button size="small">EDIT</Button>,
       tooltip: "Edit",
       onClick: (rd) => {
-        console.log(`Start edit from ${rd.name}`);
+        console.log(`Start edit from ${(rd as any).name}`);
       },
     },
   ],
