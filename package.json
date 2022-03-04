@@ -2,9 +2,12 @@
   "name": "ui-atlas",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "license": "SEE LICENSE ON LICENSE.txt",
+  "author": "joaopalves",
+  "license": "ISC",
   "scripts": {
-    "storybook": "start-storybook - p 8080"
+    "storybook": "start-storybook - p 8080",
+    "build:publish": "tasks/publish.sh",
+    "build": "tsc --declaration"
   },
   "devDependencies": {
     "@storybook/addon-centered": "^5.3.21",
@@ -24,6 +27,7 @@
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.4.3",
+    "jpa-ts-utils": "^1.0.1",
     "polished": "^4.1.4",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3"
