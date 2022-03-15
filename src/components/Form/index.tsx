@@ -20,6 +20,11 @@ type FormContextType = {
   ) => void;
   setFieldError: (fieldName: never, value: never) => void;
   getFieldValue: (fieldName: string, separationChar?: string) => void;
+  /**
+   *
+   * @param separationChar Character used to separate the string and assemble the required scope
+   * @returns void
+   */
   onChangeValue: (
     separationChar?: string
   ) => (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => void;
@@ -76,11 +81,6 @@ const useForm = ({ initialValues = {}, isReadOnlyForm = false } = {}) => {
     separationChar = DEFAULT_SEPARATION_CHAR
   ) => view(lensPath(split(separationChar, fieldName)), values);
 
-  /**
-   *
-   * @param separationChar Character used to separate the string and assemble the required scope
-   * @returns void
-   */
   const onChangeValue =
     (separationChar = DEFAULT_SEPARATION_CHAR) =>
     (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => {

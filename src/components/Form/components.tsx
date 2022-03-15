@@ -3,6 +3,7 @@ import { useFormContext } from ".";
 
 import { TextField, TextFieldCustomProps } from "../TextField";
 import { Checkbox, CheckboxCustomProps } from "../Checkbox";
+import { RadioGroup, RadioGroupCustomProps } from "../RadioGroup";
 
 type WithCurrentFormProps<InputProps> = {
   name: string;
@@ -58,3 +59,5 @@ function withCurrentForm<InputProps>(Component: any) {
 
 export const FormTextField = withCurrentForm<TextFieldCustomProps>(TextField);
 export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
+export const FormRadioGroup =
+  withCurrentForm<RadioGroupCustomProps>(RadioGroup);

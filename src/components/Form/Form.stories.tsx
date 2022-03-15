@@ -2,7 +2,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Form } from ".";
-import { FormTextField, FormCheckbox } from "./components";
+import { FormTextField, FormCheckbox, FormRadioGroup } from "./components";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { phoneMask } from "jpa-ts-utils";
 import * as Yup from "yup";
@@ -58,15 +58,9 @@ const Template: ComponentStory<typeof Form> = (args) => {
             <Grid item xs={12}>
               <FormTextField required fullWidth label="Name" name="user.name" />
             </Grid>
-
             <Grid item xs={12}>
               <FormTextField fullWidth label="Nickname" name="user.nickname" />
             </Grid>
-
-            <Grid item xs={12}>
-              <FormTextField required fullWidth label="E-mail" name="email" />
-            </Grid>
-
             <Grid item xs={12}>
               <FormTextField
                 required
@@ -80,6 +74,21 @@ const Template: ComponentStory<typeof Form> = (args) => {
                   mask: phoneMask,
                 }}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <FormRadioGroup
+                row
+                name="gender"
+                label="Gender"
+                options={[
+                  { value: "F", label: "Female" },
+                  { value: "M", label: "Male" },
+                  { value: "O", label: "Other" },
+                ]}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormTextField required fullWidth label="E-mail" name="email" />
             </Grid>
             <Grid item xs={6}>
               <FormTextField
