@@ -4,8 +4,7 @@
 import type { StorybookConfig } from "@storybook/core-common";
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  staticDirs: ["../public"],
+  stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     "@storybook/addon-centered",
     "@storybook/addon-info",
@@ -28,11 +27,11 @@ const config: StorybookConfig = {
   features: {
     postcss: false,
   },
-  refs: {
-    "design-system": {
-      title: "Ui Kit",
-      url: "https://5ccbc373887ca40020446347-yldsqjoxzb.chromatic.com",
-    },
-  },
+  // refs: {
+  //   "design-system": {
+  //     title: "Ui Kit",
+  //     url: "https://5ccbc373887ca40020446347-yldsqjoxzb.chromatic.com",
+  //   },
+  // },
 };
 module.exports = config;

@@ -1,6 +1,10 @@
 import React from "react";
-import { FormHelperText, CheckboxProps } from "@mui/material";
-import { StyledFormControlLabel, StyledCheckbox } from "./styles";
+import {
+  FormHelperText,
+  FormControlLabel,
+  Checkbox as MuiCheckbox,
+  CheckboxProps,
+} from "@mui/material";
 
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
 
@@ -18,10 +22,7 @@ export const Checkbox: React.FC<CheckboxCustomProps> = ({
 }) => {
   return (
     <>
-      <StyledFormControlLabel
-        label={label}
-        control={<StyledCheckbox {...props} />}
-      />
+      <FormControlLabel label={label} control={<MuiCheckbox {...props} />} />
       {helperText && (
         <FormHelperText error={error}>{helperText}</FormHelperText>
       )}
