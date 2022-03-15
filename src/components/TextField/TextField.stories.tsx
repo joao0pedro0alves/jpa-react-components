@@ -18,15 +18,35 @@ const Template: ComponentStory<typeof TextField> = (args) => (
   <TextField {...args} />
 );
 
-export const Default = Template.bind({});
+// export const Default = Template.bind({});
 
-Default.args = {
+export const Outlined = Template.bind({});
+
+export const Filled = Template.bind({});
+
+export const Standard = Template.bind({});
+
+const getArgs = ({ ...args }) => ({
   /*👇 The args you need here will depend on your component */
-  label: "Email",
-  placeholder: "Please, digit your email address",
-  required: true,
+  label: "Label",
+  placeholder: "Placeholder",
+  required: false,
   disabled: false,
   focused: false,
   hiddenLabel: false,
   margin: "normal",
-};
+  size: "medium",
+  ...args,
+});
+
+Outlined.args = getArgs({
+  variant: "outlined",
+});
+
+Filled.args = getArgs({
+  variant: "filled",
+});
+
+Standard.args = getArgs({
+  variant: "standard",
+});
