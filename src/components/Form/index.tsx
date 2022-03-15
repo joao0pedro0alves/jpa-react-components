@@ -16,13 +16,13 @@ type FormContextType = {
   setFieldValue: (
     fieldName: string,
     newValue: any,
-    separationChar: string
+    separationChar?: string
   ) => void;
   setFieldError: (fieldName: never, value: never) => void;
   getFieldValue: (fieldName: string, separationChar?: string) => void;
   onChangeValue: (
     separationChar?: string
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  ) => (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => void;
 } | null;
 
 interface FormProviderProps {
@@ -31,6 +31,13 @@ interface FormProviderProps {
 
 type FormProps = {
   formRef?: React.MutableRefObject<any>;
+  /**
+   * Optional validation scheme, created from the `yup` library
+   *
+   * Docs:
+   *
+   * - [Yup](https://github.com/jquense/yup)
+   */
   validationSchema?: Yup.AnyObjectSchema;
   initialData?: object;
   onSubmit: (values: any, e: React.FormEvent<HTMLFormElement>) => void;
@@ -76,12 +83,10 @@ const useForm = ({ initialValues = {}, isReadOnlyForm = false } = {}) => {
    */
   const onChangeValue =
     (separationChar = DEFAULT_SEPARATION_CHAR) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => {
       if (isReadOnlyForm) return;
-
-      const {
-        target: { name, value },
-      } = event;
+      const name = event.target.name;
+      const value = inputValue !== undefined ? inputValue : event.target.value;
 
       setFieldValue(name, value, separationChar);
     };
@@ -121,7 +126,7 @@ const Form: React.FC<FormProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validate before submitting the values if the validation schema is received by the form
+    // Validate before submitting, if the validation schema is received by the form
     if (validationSchema) {
       form.setErrors({});
 

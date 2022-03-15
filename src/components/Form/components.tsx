@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormContext } from ".";
 
-import TextField from "../TextField";
-import { TextFieldProps } from "@mui/material";
+import { TextField, TextFieldCustomProps } from "../TextField";
+import { Checkbox, CheckboxCustomProps } from "../Checkbox";
 
 type WithCurrentFormProps<InputProps> = {
   name: string;
@@ -18,32 +18,43 @@ function withCurrentForm<InputProps>(Component: any) {
     ...props
   }: WithCurrentFormProps<InputProps>) => {
     const formContext = useFormContext();
-    if (formContext) {
-      const { errors, getFieldValue, onChangeValue, isReadOnlyForm } =
-        formContext;
 
-      const value = getFieldValue(name, separationChar);
-      const errorMessage = (errors as any)[name];
-      const withError = Boolean(errorMessage);
+    const errors = formContext?.errors;
+    const isReadOnlyForm = formContext?.isReadOnlyForm;
+    const getFieldValue = formContext?.getFieldValue;
+    const onChangeValue = formContext?.onChangeValue;
 
-      return (
-        <Component
-          name={name}
-          value={value}
-          disabled={Boolean(isReadOnlyForm || disabled)}
-          error={withError}
-          helperText={errorMessage}
-          onChange={onChangeValue(separationChar)}
-          {...props}
-        />
-      );
-    } else return null;
+    const value =
+      typeof getFieldValue === "function"
+        ? getFieldValue(name, separationChar)
+        : "";
+
+    const errorMessage = (errors as any)[name];
+    const withError = Boolean(errorMessage);
+
+    return (
+      <Component
+        name={name}
+        // Fixes Warning: A component is changing an uncontrolled input to be controlled.
+        value={value || ""}
+        disabled={Boolean(isReadOnlyForm || disabled)}
+        error={withError}
+        helperText={errorMessage}
+        onChange={
+          typeof onChangeValue === "function"
+            ? onChangeValue(separationChar)
+            : undefined
+        }
+        {...props}
+      />
+    );
   };
 
   WithCurrentForm.WrappedComponent = Component;
   return WithCurrentForm;
 }
 
-// ℂ𝕠𝕞𝕡𝕠𝕟𝕖𝕟𝕥𝕤
+// --------------- ℂ𝕠𝕞𝕡𝕠𝕟𝕖𝕟𝕥𝕤 ---------------
 
-export const FormTextField = withCurrentForm<TextFieldProps>(TextField);
+export const FormTextField = withCurrentForm<TextFieldCustomProps>(TextField);
+export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
