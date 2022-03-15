@@ -2,7 +2,12 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Form } from ".";
-import { FormTextField, FormCheckbox, FormRadioGroup } from "./components";
+import {
+  FormTextField,
+  FormCheckbox,
+  FormRadioGroup,
+  FormFileInput,
+} from "./components";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { phoneMask } from "jpa-ts-utils";
 import * as Yup from "yup";
@@ -33,7 +38,7 @@ const schema = Yup.object().shape({
 //👇 We create a “template” of how args map to rendering
 const Template: ComponentStory<typeof Form> = (args) => {
   const handleSubmit = (values) => {
-    alert(JSON.stringify(values));
+    console.log(values);
   };
 
   return (
@@ -55,6 +60,12 @@ const Template: ComponentStory<typeof Form> = (args) => {
           {...args}
         >
           <Grid container spacing={2} direction="row">
+            <Grid item xs={12}>
+              <FormFileInput
+                name="user.profile"
+                label="Click to insert a profile photo"
+              />
+            </Grid>
             <Grid item xs={12}>
               <FormTextField required fullWidth label="Name" name="user.name" />
             </Grid>
@@ -131,5 +142,15 @@ export const SignUp = Template.bind({});
 
 SignUp.args = {
   /*👇 The args you need here will depend on your component */
-  initialData: {},
+  initialData: {
+    user: {
+      name: "João Pedro",
+      nickname: "joao",
+      phone: "19996050746",
+    },
+    gender: "M",
+    email: "joao.alves1032003@gmail.com",
+    password: "123456",
+    confirmPassword: "123456",
+  },
 };
