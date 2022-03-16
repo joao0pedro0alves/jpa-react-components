@@ -8,15 +8,15 @@ import { FormInputProps, Option } from "../../types";
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
 
 export type ComboboxCustomProps = FormInputProps & {
-  value: any;
-  inputComponentProps?: TextFieldCustomProps;
   options: Option[];
+  value?: any;
   onChange?: (
     event: React.SyntheticEvent<Element, Event>,
     value: any,
     inputName: string
   ) => void;
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
+  inputComponentProps?: TextFieldCustomProps;
 };
 
 export function Combobox({
