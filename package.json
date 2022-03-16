@@ -10,9 +10,7 @@
     "build": "tsc --declaration"
   },
   "devDependencies": {
-    "@storybook/addon-centered": "^5.3.21",
     "@storybook/addon-essentials": "^6.4.19",
-    "@storybook/addon-info": "^5.3.21",
     "@storybook/addons": "^6.4.19",
     "@storybook/react": "^6.4.19",
     "@storybook/theming": "^6.4.19",

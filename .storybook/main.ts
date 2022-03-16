@@ -5,11 +5,7 @@ import type { StorybookConfig } from "@storybook/core-common";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  addons: [
-    "@storybook/addon-centered",
-    "@storybook/addon-info",
-    "@storybook/addon-essentials",
-  ],
+  addons: ["@storybook/addon-essentials"],
   typescript: {
     check: false,
     checkOptions: {},
@@ -27,11 +23,5 @@ const config: StorybookConfig = {
   features: {
     postcss: false,
   },
-  // refs: {
-  //   "design-system": {
-  //     title: "Ui Kit",
-  //     url: "https://5ccbc373887ca40020446347-yldsqjoxzb.chromatic.com",
-  //   },
-  // },
 };
 module.exports = config;
