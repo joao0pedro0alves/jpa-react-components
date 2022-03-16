@@ -3,6 +3,7 @@ import { useFormContext } from ".";
 
 import { TextField, TextFieldCustomProps } from "../TextField";
 import { Select, SelectCustomProps } from "../Select";
+import { Combobox, ComboboxCustomProps } from "../Combobox";
 import { Checkbox, CheckboxCustomProps } from "../Checkbox";
 import { RadioGroup, RadioGroupCustomProps } from "../RadioGroup";
 import { FileInput, FileInputCustomProps } from "../FileInput";
@@ -61,10 +62,11 @@ function withCurrentForm<InputProps>(Component: any) {
 // --------------- ℂ𝕠𝕞𝕡𝕠𝕟𝕖𝕟𝕥𝕤 ---------------
 
 export const FormTextField = withCurrentForm<TextFieldCustomProps>(TextField);
-export const FormSelect = withCurrentForm<SelectCustomProps>(Select);
 export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
 export const FormRadioGroup =
   withCurrentForm<RadioGroupCustomProps>(RadioGroup);
 export const FormFileInput = withCurrentForm<FileInputCustomProps>(FileInput);
 export const FormDatePicker =
   withCurrentForm<DatePickerCustomProps>(DatePicker);
+export const FormSelect = withCurrentForm<SelectCustomProps>(Select);
+export const FormCombobox = withCurrentForm<ComboboxCustomProps>(Combobox);

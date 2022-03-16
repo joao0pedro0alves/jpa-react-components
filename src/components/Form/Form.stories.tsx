@@ -9,6 +9,7 @@ import {
   FormFileInput,
   FormDatePicker,
   FormSelect,
+  FormCombobox,
 } from "./components";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { phoneMask } from "jpa-ts-utils";
@@ -133,6 +134,17 @@ const Template: ComponentStory<typeof Form> = (args) => {
                   fullWidth: true,
                   required: true,
                 }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormCombobox
+                label="Social Status"
+                name="user.socialStatus"
+                options={[
+                  { label: "Other", value: '0' },
+                  { label: "Single", value: '1' },
+                  { label: "Married", value: '2' },
+                ]}
               />
             </Grid>
             <Grid item xs={12}>

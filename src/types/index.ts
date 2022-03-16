@@ -1,13 +1,19 @@
 import React from "react";
 
+export type FormInputLabel =
+  | string
+  | number
+  | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+
 export interface FormInputProps {
+  /**
+   * A required field name
+   */
+  name: Required<string>;
   /**
    * A text or an element to be used in an enclosing label element.
    */
-  label:
-    | string
-    | number
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+  label: FormInputLabel;
   /**
    * If `true`, the label is displayed in an error state.
    * @default `false`
