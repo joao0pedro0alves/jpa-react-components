@@ -31,7 +31,9 @@ export const TextField: React.FC<TextFieldCustomProps> = ({
       {...props}
       inputProps={{ ...props.inputProps, ...textMaskProps }}
       InputProps={{ ...getInputProps() }}
-    />
+    >
+      {props.children}
+    </MuiTextField>
   );
 };
 

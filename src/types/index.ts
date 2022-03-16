@@ -18,3 +18,14 @@ export interface FormInputProps {
    */
   helperText?: string | React.ReactNode;
 }
+
+export interface Option {
+  /** Option value */
+  value: any;
+
+  /** Option content */
+  label:
+    | string
+    | number
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
+}

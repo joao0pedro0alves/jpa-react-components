@@ -1,13 +1,14 @@
 // Form.stories.ts|tsx
-import React from "react";
+import React, { useRef } from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Form } from ".";
+import { Form, FormRef } from ".";
 import {
   FormTextField,
   FormCheckbox,
   FormRadioGroup,
   FormFileInput,
   FormDatePicker,
+  FormSelect,
 } from "./components";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { phoneMask } from "jpa-ts-utils";
@@ -42,8 +43,23 @@ const schema = Yup.object().shape({
 
 //👇 We create a “template” of how args map to rendering
 const Template: ComponentStory<typeof Form> = (args) => {
+  const formRef = useRef<FormRef | null>(null);
+
   const handleSubmit = (values) => {
     console.log(values);
+  };
+
+  const handleFillUserNickName = (e) => {
+    const value = e.target.value;
+    if (typeof value === "string") {
+      const nickname = value
+        .replace(/\s/g, "-")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      formRef.current.setFieldValue("user.nickname", nickname);
+    }
   };
 
   return (
@@ -60,6 +76,7 @@ const Template: ComponentStory<typeof Form> = (args) => {
       <Box display="flex">
         <Form
           style={{ flex: 1, minWidth: 500 }}
+          formRef={formRef}
           validationSchema={schema}
           onSubmit={handleSubmit}
           {...args}
@@ -72,7 +89,13 @@ const Template: ComponentStory<typeof Form> = (args) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormTextField required fullWidth label="Name" name="user.name" />
+              <FormTextField
+                required
+                fullWidth
+                label="Name"
+                name="user.name"
+                onBlur={handleFillUserNickName}
+              />
             </Grid>
             <Grid item xs={12}>
               <FormTextField fullWidth label="Nickname" name="user.nickname" />
@@ -91,7 +114,19 @@ const Template: ComponentStory<typeof Form> = (args) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
+              <FormSelect
+                fullWidth
+                label="Country"
+                name="country"
+                options={[
+                  { value: "br", label: "Brazil" },
+                  { value: "usa", label: "United States" },
+                  { value: "french", label: "French" },
+                ]}
+              />
+            </Grid>
+            <Grid item xs={6}>
               <FormDatePicker
                 name="user.birthDate"
                 inputComponentProps={{
@@ -159,7 +194,7 @@ SignUp.args = {
   initialData: {
     user: {
       name: "João Pedro",
-      nickname: "joao",
+      nickname: "",
       phone: "19996050746",
       birthDate: parseISO(new Date().toISOString()),
     },

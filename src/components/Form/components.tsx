@@ -2,6 +2,7 @@ import React from "react";
 import { useFormContext } from ".";
 
 import { TextField, TextFieldCustomProps } from "../TextField";
+import { Select, SelectCustomProps } from "../Select";
 import { Checkbox, CheckboxCustomProps } from "../Checkbox";
 import { RadioGroup, RadioGroupCustomProps } from "../RadioGroup";
 import { FileInput, FileInputCustomProps } from "../FileInput";
@@ -60,6 +61,7 @@ function withCurrentForm<InputProps>(Component: any) {
 // --------------- ℂ𝕠𝕞𝕡𝕠𝕟𝕖𝕟𝕥𝕤 ---------------
 
 export const FormTextField = withCurrentForm<TextFieldCustomProps>(TextField);
+export const FormSelect = withCurrentForm<SelectCustomProps>(Select);
 export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
 export const FormRadioGroup =
   withCurrentForm<RadioGroupCustomProps>(RadioGroup);

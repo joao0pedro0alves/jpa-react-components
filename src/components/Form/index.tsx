@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 const DEFAULT_SEPARATION_CHAR = ".";
 
-type FormContextType = {
+export interface FormContextType {
   values: object;
   errors: object;
   isReadOnlyForm: boolean;
@@ -22,19 +22,23 @@ type FormContextType = {
   getFieldValue: (fieldName: string, separationChar?: string) => void;
   /**
    *
-   * @param separationChar Character used to separate the string and assemble the required scope
+   * @param {string} separationChar Character used to separate the string and assemble the required scope
    * @returns void
    */
   onChangeValue: (
     separationChar?: string
   ) => (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => void;
-} | null;
+}
 
-interface FormProviderProps {
+export interface FormProviderProps {
   form: FormContextType;
 }
 
-type FormProps = {
+export interface FormRef extends FormContextType {
+  _form: React.ReactNode;
+}
+
+export type FormProps = {
   formRef?: React.MutableRefObject<any>;
   /**
    * Optional validation scheme, created from the `yup` library
@@ -50,7 +54,7 @@ type FormProps = {
 
 // --------------- 𝕌𝕥𝕚𝕝𝕤 ---------------
 
-const FormContext = createContext<FormContextType>(null);
+const FormContext = createContext<FormContextType | null>(null);
 FormContext.displayName = "FormContext";
 
 const useFormContext = () => useContext(FormContext);
@@ -154,13 +158,12 @@ const Form: React.FC<FormProps> = ({
     } else onSubmit(form.values, e);
   };
 
+  const getRef = (_form: React.ReactNode) =>
+    formRef ? (formRef.current = { ...form, _form }) : null;
+
   return (
     <FormProvider form={form}>
-      <form
-        ref={(elem) => (formRef ? (formRef.current = { ...form, elem }) : null)}
-        onSubmit={(event) => handleSubmit(event)}
-        {...props}
-      >
+      <form ref={getRef} onSubmit={(event) => handleSubmit(event)} {...props}>
         {children}
       </form>
     </FormProvider>

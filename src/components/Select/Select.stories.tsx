@@ -1,7 +1,7 @@
-// Button.stories.ts|tsx
+// Select.stories.ts|tsx
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Button } from ".";
+import { Select } from ".";
 
 //👇 This default export determines where your story goes in the story list
 export default {
@@ -9,18 +9,23 @@ export default {
    * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
    * to learn how to generate automatic titles
    */
-  title: "Button",
-  component: Button,
-} as ComponentMeta<typeof Button>;
+  title: "Select",
+  component: Select,
+} as ComponentMeta<typeof Select>;
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof Button> = (args) => (
-  <Button {...args}>Button</Button>
-);
+const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />;
 
 export const Default = Template.bind({});
 
+const countries = [
+  { value: "BRZ", label: "Brazil" },
+  { value: "USA", label: "United States" },
+];
+
 Default.args = {
   /*👇 The args you need here will depend on your component */
-  variant: "contained",
+  label: "Country",
+  emptyOption: "Select your origin country",
+  options: countries,
 };
