@@ -9,6 +9,7 @@ import {
   FormHelperText,
   RadioProps,
 } from "@mui/material";
+import { FormInputProps } from "../../types";
 
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
 
@@ -20,13 +21,11 @@ interface Option {
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
 }
 
-export type RadioGroupCustomProps = {
-  options: Option[];
-  label?: string;
-  error?: boolean;
-  helperText?: string;
-  RadioProps?: RadioProps;
-} & RadioGroupProps;
+export type RadioGroupCustomProps = RadioGroupProps &
+  FormInputProps & {
+    options: Option[];
+    RadioProps?: RadioProps;
+  };
 
 export const RadioGroup: React.FC<RadioGroupCustomProps> = ({
   label,

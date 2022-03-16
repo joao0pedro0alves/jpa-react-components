@@ -2,6 +2,7 @@ import React from "react";
 import MaskedInput, { MaskedInputProps } from "react-text-mask";
 
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
+
 type MaskedInputCustomProps = MaskedInputProps | Readonly<MaskedInputProps>;
 
 /**

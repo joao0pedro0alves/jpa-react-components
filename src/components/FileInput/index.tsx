@@ -1,7 +1,9 @@
 import React from "react";
-import { Typography, AvatarProps } from "@mui/material";
+import { Typography, AvatarProps, FormHelperText } from "@mui/material";
 import { Container, StyledInputLabel } from "./styles";
 import filesize from "filesize";
+
+import { FormInputProps } from "../../types";
 
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
 
@@ -16,17 +18,21 @@ export interface ReadedFile {
   size: number;
 }
 
-export type FileInputProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
-> & {
-  label?: string;
+export interface FileInputProps extends FormInputProps {
   value?: ReadedFile | null;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>, file: ReadedFile) => void;
   AvatarProps?: AvatarProps;
-};
+}
 
-export const FileInput: React.FC<FileInputProps> = ({
+export type FileInputCustomProps = FileInputProps &
+  React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >;
+
+export const FileInput: React.FC<FileInputCustomProps> = ({
+  helperText,
+  error,
   label,
   AvatarProps,
   ...props
@@ -74,6 +80,9 @@ export const FileInput: React.FC<FileInputProps> = ({
           multiple={false}
         />
       </StyledInputLabel>
+      {helperText && (
+        <FormHelperText error={error}>{helperText}</FormHelperText>
+      )}
     </Container>
   );
 };

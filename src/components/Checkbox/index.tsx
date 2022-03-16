@@ -3,16 +3,13 @@ import {
   FormHelperText,
   FormControlLabel,
   Checkbox as MuiCheckbox,
-  CheckboxProps,
+  CheckboxProps as MuiCheckboxProps,
 } from "@mui/material";
+import { FormInputProps } from "../../types";
 
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
 
-export type CheckboxCustomProps = {
-  label: string;
-  error?: boolean;
-  helperText?: string;
-} & CheckboxProps;
+export type CheckboxCustomProps = MuiCheckboxProps & FormInputProps;
 
 export const Checkbox: React.FC<CheckboxCustomProps> = ({
   label,

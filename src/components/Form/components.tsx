@@ -4,7 +4,7 @@ import { useFormContext } from ".";
 import { TextField, TextFieldCustomProps } from "../TextField";
 import { Checkbox, CheckboxCustomProps } from "../Checkbox";
 import { RadioGroup, RadioGroupCustomProps } from "../RadioGroup";
-import { FileInput, FileInputProps } from "../FileInput";
+import { FileInput, FileInputCustomProps } from "../FileInput";
 
 type WithCurrentFormProps<InputProps> = {
   name: string;
@@ -62,4 +62,4 @@ export const FormTextField = withCurrentForm<TextFieldCustomProps>(TextField);
 export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
 export const FormRadioGroup =
   withCurrentForm<RadioGroupCustomProps>(RadioGroup);
-export const FormFileInput = withCurrentForm<FileInputProps>(FileInput);
+export const FormFileInput = withCurrentForm<FileInputCustomProps>(FileInput);
