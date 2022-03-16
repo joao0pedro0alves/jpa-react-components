@@ -28,7 +28,9 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
+    "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.4.3",
+    "date-fns": "^2.28.0",
     "filesize": "^8.0.7",
     "jpa-ts-utils": "^1.0.1",
     "polished": "^4.1.4",

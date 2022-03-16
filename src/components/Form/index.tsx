@@ -83,12 +83,17 @@ const useForm = ({ initialValues = {}, isReadOnlyForm = false } = {}) => {
 
   const onChangeValue =
     (separationChar = DEFAULT_SEPARATION_CHAR) =>
-    (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => {
+    (
+      event: React.ChangeEvent<HTMLInputElement> | null,
+      inputValue: any,
+      inputName?: string
+    ) => {
       if (isReadOnlyForm) return;
-      const name = event.target.name;
-      const value = inputValue !== undefined ? inputValue : event.target.value;
+      const isValid = (v?: string) => v === undefined && event !== null;
+      let name = isValid(inputName) ? event?.target.name : inputName;
+      let value = isValid(inputValue) ? event?.target.value : inputValue;
 
-      setFieldValue(name, value, separationChar);
+      if (name) setFieldValue(name, value, separationChar);
     };
 
   return {

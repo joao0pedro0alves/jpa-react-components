@@ -7,10 +7,12 @@ import {
   FormCheckbox,
   FormRadioGroup,
   FormFileInput,
+  FormDatePicker,
 } from "./components";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { phoneMask } from "jpa-ts-utils";
 import * as Yup from "yup";
+import parseISO from "date-fns/parseISO";
 
 //👇 This default export determines where your story goes in the story list
 export default {
@@ -28,6 +30,9 @@ const schema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password")])
     .required(),
+  acceptTerms: Yup.bool()
+    .oneOf([true])
+    .required("Please accept our terms of service"),
 
   // user
   user: Yup.object().shape({
@@ -83,6 +88,15 @@ const Template: ComponentStory<typeof Form> = (args) => {
                 }}
                 textMaskProps={{
                   mask: phoneMask,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormDatePicker
+                name="user.birthDate"
+                inputComponentProps={{
+                  fullWidth: true,
+                  required: true,
                 }}
               />
             </Grid>
@@ -147,6 +161,7 @@ SignUp.args = {
       name: "João Pedro",
       nickname: "joao",
       phone: "19996050746",
+      birthDate: parseISO(new Date().toISOString()),
     },
     gender: "M",
     email: "joao.alves1032003@gmail.com",

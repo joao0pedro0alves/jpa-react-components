@@ -5,6 +5,7 @@ import { TextField, TextFieldCustomProps } from "../TextField";
 import { Checkbox, CheckboxCustomProps } from "../Checkbox";
 import { RadioGroup, RadioGroupCustomProps } from "../RadioGroup";
 import { FileInput, FileInputCustomProps } from "../FileInput";
+import { DatePicker, DatePickerCustomProps } from "../DatePicker";
 
 type WithCurrentFormProps<InputProps> = {
   name: string;
@@ -63,3 +64,5 @@ export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
 export const FormRadioGroup =
   withCurrentForm<RadioGroupCustomProps>(RadioGroup);
 export const FormFileInput = withCurrentForm<FileInputCustomProps>(FileInput);
+export const FormDatePicker =
+  withCurrentForm<DatePickerCustomProps>(DatePicker);
