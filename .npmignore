@@ -3,3 +3,5 @@ yarn.lock
 tsconfig.json
 .vscode
 .storybook
+.comments.txt
+*.log

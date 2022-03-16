@@ -10,13 +10,13 @@
     "build": "tsc --declaration"
   },
   "devDependencies": {
-    "@storybook/addon-centered": "^5.3.21",
     "@storybook/addon-essentials": "^6.4.19",
-    "@storybook/addon-info": "^5.3.21",
     "@storybook/addons": "^6.4.19",
     "@storybook/react": "^6.4.19",
     "@storybook/theming": "^6.4.19",
+    "@types/ramda": "^0.28.0",
     "@types/react": "^17.0.39",
+    "@types/react-text-mask": "^5.4.11",
     "@types/styled-components": "^5.1.23",
     "react": "^17.0.2",
     "react-docgen-typescript-loader": "^3.7.2",
@@ -26,10 +26,16 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
+    "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.4.3",
+    "date-fns": "^2.28.0",
+    "filesize": "^8.0.7",
     "jpa-ts-utils": "^1.0.1",
     "polished": "^4.1.4",
+    "ramda": "^0.28.0",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.3"
+    "react-text-mask": "^5.4.3",
+    "styled-components": "^5.3.3",
+    "yup": "^0.32.11"
   }
 }

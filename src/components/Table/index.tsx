@@ -25,10 +25,14 @@ type ColumnAligns =
   | "inherit"
   | undefined;
 
-type ColumnRenderCell<RowDataType> = (provided: {
+type ColumnRenderCellProvided<RowDataType> = {
   rowData: RowDataType;
   coords: number[];
-}) => React.ReactNode;
+};
+
+type ColumnRenderCell<RowDataType> = (
+  provided: ColumnRenderCellProvided<RowDataType>
+) => React.ReactNode;
 
 // 𝕀𝕟𝕥𝕖𝕣𝕗𝕒𝕔𝕖𝕤
 
@@ -50,8 +54,26 @@ export interface Column<RowDataType = object> {
    * `
    */
   field: string;
+  /**
+   * Set the text-align on the table cell content.
+   *
+   * Monetary or generally number fields **should be right aligned** as that allows
+   * you to add them up quickly in your head without having to worry about decimals.
+   * @default 'inherit'
+   */
   align?: ColumnAligns;
+  /**
+   * Set if the field is sortable
+   *
+   * @default 'true'
+   */
   sorting?: boolean;
+  /**
+   * Function that defines how the table cell contents will be rendered
+   *
+   * @param {ColumnRenderCellProvided} provided - Data provided for the creation of cell contents: row data, cell coordinates...
+   * @returns {React.ReactNode}
+   */
   renderCell?: ColumnRenderCell<RowDataType>;
 }
 
@@ -76,7 +98,7 @@ export interface Props<RowDataType = object> extends TableProps {
 
 // 𝕄𝕒𝕚𝕟
 
-function Table<RowDataType>({
+export function Table<RowDataType>({
   columns,
   data,
   actions,
@@ -85,7 +107,6 @@ function Table<RowDataType>({
   count,
   ...props
 }: Props<RowDataType>) {
-  // Hooks
   const pagination = usePagination({
     initialPage: defaultPage,
     initialRowsPerpage: 10,
@@ -194,5 +215,3 @@ function Table<RowDataType>({
 Table.defaultProps = {
   defaultSortField: "",
 };
-
-export { Table };
