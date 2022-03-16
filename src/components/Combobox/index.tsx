@@ -19,7 +19,7 @@ export type ComboboxCustomProps = FormInputProps & {
   inputComponentProps?: TextFieldCustomProps;
 };
 
-export function Combobox({
+export const Combobox: React.FC<ComboboxCustomProps> = ({
   name,
   error,
   helperText,
@@ -27,7 +27,7 @@ export function Combobox({
   onChange,
   value,
   ...props
-}: ComboboxCustomProps) {
+}) => {
   return (
     <MuiAutocomplete
       {...props}
@@ -52,6 +52,6 @@ export function Combobox({
       )}
     />
   );
-}
+};
 
 export default Combobox;
