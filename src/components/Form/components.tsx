@@ -13,13 +13,18 @@ type WithCurrentFormProps<InputProps> = {
   name: string;
   separationChar?: string;
   disabled?: boolean;
+  /**
+   * Optional function called after form state change, can be used to change other form values
+   */
+  onAfterChange?: (value: any, name: string, values: object) => void;
 } & InputProps;
 
 function withCurrentForm<InputProps>(Component: any) {
   const WithCurrentForm = ({
     name,
-    separationChar,
     disabled,
+    separationChar,
+    onAfterChange,
     ...props
   }: WithCurrentFormProps<InputProps>) => {
     const formContext = useFormContext();
@@ -47,7 +52,7 @@ function withCurrentForm<InputProps>(Component: any) {
         helperText={errorMessage}
         onChange={
           typeof onChangeValue === "function"
-            ? onChangeValue(separationChar)
+            ? onChangeValue(separationChar, onAfterChange)
             : undefined
         }
         {...props}
@@ -65,8 +70,8 @@ export const FormTextField = withCurrentForm<TextFieldCustomProps>(TextField);
 export const FormCheckbox = withCurrentForm<CheckboxCustomProps>(Checkbox);
 export const FormRadioGroup =
   withCurrentForm<RadioGroupCustomProps>(RadioGroup);
-export const FormFileInput = withCurrentForm<FileInputCustomProps>(FileInput);
 export const FormDatePicker =
   withCurrentForm<DatePickerCustomProps>(DatePicker);
 export const FormSelect = withCurrentForm<SelectCustomProps>(Select);
 export const FormCombobox = withCurrentForm<ComboboxCustomProps>(Combobox);
+export const FormFileInput = withCurrentForm<FileInputCustomProps>(FileInput);

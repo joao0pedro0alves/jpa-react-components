@@ -6,6 +6,7 @@ export const Container = styled.div`
 `;
 
 export const StyledInputLabel = styled(InputLabel)`
+  text-align: center;
   margin: 0;
   transition: opacity 0.2s ease;
   cursor: pointer;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, AvatarProps, FormHelperText } from "@mui/material";
+import { Typography, AvatarProps, FormHelperText, Box } from "@mui/material";
 import { Container, StyledInputLabel } from "./styles";
 import filesize from "filesize";
 
@@ -22,6 +22,7 @@ export interface FileInputProps extends FormInputProps {
   value?: ReadedFile | null;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>, file: ReadedFile) => void;
   AvatarProps?: AvatarProps;
+  children?: (provided: { file: ReadedFile | undefined }) => JSX.Element;
 }
 
 export type FileInputCustomProps = FileInputProps &
@@ -30,15 +31,15 @@ export type FileInputCustomProps = FileInputProps &
     HTMLInputElement
   >;
 
-export const FileInput: React.FC<FileInputCustomProps> = ({
+export const FileInput = ({
   helperText,
   error,
   label,
   AvatarProps,
+  children,
+  value,
   ...props
-}) => {
-  const dataFile = props.value ? props.value.file : undefined;
-
+}: FileInputCustomProps) => {
   const fileReader = (file: globalThis.File) => {
     const readedFile = new Promise<ReadedFile>((response) => {
       const fileReader = new FileReader();
@@ -69,6 +70,18 @@ export const FileInput: React.FC<FileInputCustomProps> = ({
   return (
     <Container>
       <StyledInputLabel>
+        {typeof children === "function" && (
+          <Box
+            sx={{
+              margin: "auto",
+              display: "flex",
+              justifyContent: "center",
+              paddingY: "10px",
+            }}
+          >
+            {children({ file: value })}
+          </Box>
+        )}
         {label && <Typography variant="button">{label}</Typography>}
         <input
           {...props}
@@ -76,7 +89,7 @@ export const FileInput: React.FC<FileInputCustomProps> = ({
           type="file"
           accept="image/*"
           onChange={handleChange}
-          data-file={dataFile}
+          data-file={value ? value.file : undefined}
           multiple={false}
         />
       </StyledInputLabel>
