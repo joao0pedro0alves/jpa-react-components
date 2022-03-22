@@ -78,8 +78,17 @@ export interface Column<RowDataType = object> {
 }
 
 export interface TableAction<RowDataType = object> {
+  /**
+   * Action hint
+   */
   tooltip: TextWithTranslation;
-  onClick: (rd: RowDataType) => void;
+  /**
+   * @param {RowDataType} provided - row data
+   */
+  onClick: (provided: RowDataType) => void;
+  /**
+   * Action icon
+   */
   icon: React.ReactNode;
 }
 
@@ -91,8 +100,19 @@ export interface Props<RowDataType = object> extends TableProps {
   columns: Column<RowDataType>[];
   data: RowDataType[];
   actions?: TableAction<RowDataType>[];
+  /**
+   * Default initial page
+   *
+   * @default `0`
+   */
   defaultPage: number;
+  /**
+   * Default initial sort field
+   */
   defaultSortField: string;
+  /**
+   * Count of records
+   */
   count: number;
 }
 

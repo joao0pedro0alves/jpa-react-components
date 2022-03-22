@@ -36,6 +36,7 @@ export const RadioGroup: React.FC<RadioGroupCustomProps> = ({
             key={index}
             value={option.value}
             label={option.label}
+            disabled={option.disabled}
             control={<Radio {...RadioProps} />}
           />
         ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import MuiAutocomplete from "@mui/lab/Autocomplete";
+import MuiAutocomplete from "@mui/material/Autocomplete";
 import { AutocompleteRenderInputParams } from "@mui/material";
 
 import TextField, { TextFieldCustomProps } from "../TextField";
@@ -8,8 +8,9 @@ import { FormInputProps, Option } from "../../types";
 // --------------- 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒 ---------------
 
 export type ComboboxCustomProps = FormInputProps & {
+  /** Combobox options */
   options: Option[];
-  value?: any;
+  value?: Option | null;
   onChange?: (
     event: React.SyntheticEvent<Element, Event>,
     value: any,
@@ -33,6 +34,7 @@ export const Combobox: React.FC<ComboboxCustomProps> = ({
       {...props}
       value={value || null}
       disablePortal
+      getOptionDisabled={(option) => option.disabled || false}
       isOptionEqualToValue={(option, selectedOption) =>
         option.value === selectedOption.value
       }
