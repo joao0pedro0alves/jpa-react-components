@@ -64,8 +64,8 @@ export const DatePicker: React.FC<DatePickerCustomProps> = ({
         {...datePickerComponentProps}
         value={value || null}
         onChange={handleChange}
-        renderInput={(inputprops) => (
-          <TextField name={name} {...inputComponentProps} {...inputprops} />
+        renderInput={(params) => (
+          <TextField name={name} {...params} {...inputComponentProps} />
         )}
       />
     </MuiLocalizationProvider>

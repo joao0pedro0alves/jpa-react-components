@@ -14,17 +14,25 @@ export default {
 } as ComponentMeta<typeof Combobox>;
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof Combobox> = (args) => (
-  <Combobox {...args} />
-);
+const Template: ComponentStory<typeof Combobox> = (args) => {
+  const [value, setValue] = React.useState(null);
+
+  return (
+    <Combobox
+      {...args}
+      value={value}
+      onChange={(e, option) => setValue(option)}
+    />
+  );
+};
 
 export const Default = Template.bind({});
 
 const options = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
+  { label: "The Shawshank Redemption", value: 1994 },
+  { label: "The Godfather", value: 1972 },
+  { label: "The Godfather: Part II", value: 1974 },
+  { label: "The Dark Knight", value: 2008 },
 ];
 
 Default.args = {

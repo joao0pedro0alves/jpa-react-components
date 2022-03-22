@@ -6,8 +6,8 @@ import * as Yup from "yup";
 
 const DEFAULT_SEPARATION_CHAR = ".";
 
-export interface FormContextType {
-  values: object;
+export interface FormContextType<T = object> {
+  values: T;
   errors: object;
   isReadOnlyForm: boolean;
   setValues: React.Dispatch<React.SetStateAction<{}>>;
@@ -22,11 +22,13 @@ export interface FormContextType {
   getFieldValue: (fieldName: string, separationChar?: string) => void;
   /**
    *
-   * @param {string} separationChar Character used to separate the string and assemble the required scope
+   * @param {string} separationChar - Character used to separate the string and assemble the required scope
+   * @param {function} onAfterChange - Optional function called after form state change, can be used to change other form values
    * @returns void
    */
   onChangeValue: (
-    separationChar?: string
+    separationChar?: string,
+    onAfterChange?: (value: any, name: string, values: T) => void
   ) => (event: React.ChangeEvent<HTMLInputElement>, inputValue: any) => void;
 }
 
@@ -34,7 +36,7 @@ export interface FormProviderProps {
   form: FormContextType;
 }
 
-export interface FormRef extends FormContextType {
+export interface FormRef<Values = object> extends FormContextType<Values> {
   _form: React.ReactNode;
 }
 
@@ -86,7 +88,10 @@ const useForm = ({ initialValues = {}, isReadOnlyForm = false } = {}) => {
   ) => view(lensPath(split(separationChar, fieldName)), values);
 
   const onChangeValue =
-    (separationChar = DEFAULT_SEPARATION_CHAR) =>
+    (
+      separationChar = DEFAULT_SEPARATION_CHAR,
+      onAfterChange?: (value: any, name: string, values: object) => void
+    ) =>
     (
       event: React.ChangeEvent<HTMLInputElement> | null,
       inputValue: any,
@@ -97,7 +102,10 @@ const useForm = ({ initialValues = {}, isReadOnlyForm = false } = {}) => {
       let name = isValid(inputName) ? event?.target.name : inputName;
       let value = isValid(inputValue) ? event?.target.value : inputValue;
 
-      if (name) setFieldValue(name, value, separationChar);
+      if (name) {
+        setFieldValue(name, value, separationChar);
+        if (onAfterChange) onAfterChange(value, name, values);
+      }
     };
 
   return {

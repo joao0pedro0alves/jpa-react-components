@@ -15,7 +15,9 @@ export default {
 
 //👇 We create a “template” of how args map to rendering
 const Template: ComponentStory<typeof FileInput> = (args) => (
-  <FileInput {...args} />
+  <div style={{ maxWidth: 300 }}>
+    <FileInput {...args} />
+  </div>
 );
 
 export const Default = Template.bind({});

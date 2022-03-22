@@ -25,7 +25,7 @@ export interface FormInputProps {
   helperText?: string | React.ReactNode;
 }
 
-export interface Option {
+export type Option = {
   /** Option value */
   value: any;
 
@@ -34,4 +34,7 @@ export interface Option {
     | string
     | number
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
-}
+
+  /** If `true`, the option is disabled. */
+  disabled?: boolean;
+};
