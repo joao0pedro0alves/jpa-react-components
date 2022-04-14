@@ -1,9 +1,17 @@
 {
-  "name": "ui-atlas",
+  "name": "jpa-react-components",
   "version": "1.0.0",
   "main": "dist/index.js",
   "author": "joaopalves",
   "license": "ISC",
+  "keywords": [
+    "material ui",
+    "mui",
+    "form",
+    "controlled form",
+    "table",
+    "components"
+  ],
   "scripts": {
     "storybook": "start-storybook - p 8080",
     "build:publish": "tasks/publish.sh",
