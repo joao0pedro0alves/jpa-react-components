@@ -11,7 +11,7 @@ import {
   TablePagination,
 } from "./styles";
 import { TableProps } from "@mui/material";
-import { usePagination, useSortData } from "jpa-ts-utils";
+import { usePagination, useSortData, extractLens } from "jpa-ts-utils";
 
 // 𝕋𝕪𝕡𝕖𝕤
 
@@ -105,7 +105,7 @@ export interface Props<RowDataType = object> extends TableProps {
    *
    * @default `0`
    */
-  defaultPage: number;
+  defaultPage?: number;
   /**
    * Default initial sort field
    */
@@ -128,7 +128,7 @@ export function Table<RowDataType>({
   ...props
 }: Props<RowDataType>) {
   const pagination = usePagination({
-    initialPage: defaultPage,
+    initialPage: defaultPage || 0,
     initialRowsPerpage: 10,
   });
 
@@ -144,7 +144,7 @@ export function Table<RowDataType>({
     const isActive = (field: string) => field === currentSort.field;
 
     const headers = columns.map((column) => (
-      <TableCell key={column.field}>
+      <TableCell align={column.align} key={column.field}>
         {column.sorting === false ? (
           column.title
         ) : (
@@ -173,7 +173,7 @@ export function Table<RowDataType>({
 
     const rows = (currentPageRecords as RowDataType[]).map((row, rowIndex) => {
       const rowCells = columns.map((column, columnIndex) => {
-        let cellValue = (row as any)[column.field];
+        let cellValue = extractLens(column.field, row); // (row as any)[column.field];
         const coords = [rowIndex, columnIndex];
 
         // with renderCell function
