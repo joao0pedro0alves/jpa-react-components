@@ -101,6 +101,10 @@ export interface TableAction<RowDataType = object> {
    * Action custom content
    */
   content?: (props: ColumnRenderCellProvided<RowDataType>) => React.ReactNode;
+  /**
+   * Disabled action
+   */
+  getDisabled?: (provided: RowDataType) => boolean;
 }
 
 type RenderActionType<RowDataType> = TableAction<RowDataType> & {
@@ -275,6 +279,7 @@ function renderAction<RowDataType>(actionProps: RenderActionType<RowDataType>) {
       <Tooltip title={<>{actionProps.tooltip}</>}>
         <IconButton
           size={actionProps.size}
+          disabled={actionProps.getDisabled?.(actionProps.row)}
           onClick={(e) => {
             actionProps.onClick?.(actionProps.row, e);
           }}
