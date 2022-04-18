@@ -1,7 +1,8 @@
-node_modules
-yarn.lock
-tsconfig.json
-.vscode
 .storybook
+.vscode
+node_modules
+src
 .comments.txt
 *.log
+yarn.lock
+tsconfig.json
