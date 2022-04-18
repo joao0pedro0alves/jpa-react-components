@@ -130,6 +130,12 @@ export interface Props<RowDataType = object> extends TableProps {
    * Count of records
    */
   count: number;
+  /**
+   * Control hover effect
+   *
+   * @default `false`
+   */
+  hover?: boolean;
 }
 
 // 𝕄𝕒𝕚𝕟
@@ -218,7 +224,11 @@ export function Table<RowDataType>({
           );
         }) || [];
 
-      return <TableRow key={rowIndex}>{rowCells.concat(rowActions)}</TableRow>;
+      return (
+        <TableRow hover={props.hover} key={rowIndex}>
+          {rowCells.concat(rowActions)}
+        </TableRow>
+      );
     });
 
     return rows;
@@ -269,7 +279,9 @@ function renderAction<RowDataType>(actionProps: RenderActionType<RowDataType>) {
             actionProps.onClick?.(actionProps.row, e);
           }}
         >
-          {actionProps.icon}
+          {typeof actionProps.icon === "function"
+            ? actionProps.icon(actionProps.row)
+            : actionProps.icon}
         </IconButton>
       </Tooltip>
     );
