@@ -70,11 +70,11 @@ Default.args = {
   data,
   actions: [
     {
-      icon: <Button size="small">EDIT</Button>,
-      tooltip: "Edit",
-      onClick: (rd) => {
-        console.log(`Start edit from ${(rd as any).name}`);
-      },
+      content: ({ rowData }) => (
+        <Button variant="outlined" onClick={() => console.log(rowData.name)}>
+          Edit
+        </Button>
+      ),
     },
   ],
 };

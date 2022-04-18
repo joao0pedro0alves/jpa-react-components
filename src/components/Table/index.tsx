@@ -10,7 +10,7 @@ import {
   TableSortLabel,
   TablePagination,
 } from "./styles";
-import { TableProps } from "@mui/material";
+import { IconButton, TableProps, Tooltip } from "@mui/material";
 import { usePagination, useSortData, extractLens } from "jpa-ts-utils";
 
 // 𝕋𝕪𝕡𝕖𝕤
@@ -85,12 +85,28 @@ export interface TableAction<RowDataType = object> {
   /**
    * @param {RowDataType} provided - row data
    */
-  onClick: (provided: RowDataType) => void;
+  onClick?: (
+    provided: RowDataType,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
   /**
    * Action icon
    */
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
+  /**
+   * Action icon size
+   * */
+  size?: "small" | "medium" | "large";
+  /**
+   * Action custom content
+   */
+  content?: (props: ColumnRenderCellProvided<RowDataType>) => React.ReactNode;
 }
+
+type RenderActionType<RowDataType> = TableAction<RowDataType> & {
+  row: RowDataType;
+  coords: number[];
+};
 
 export interface Props<RowDataType = object> extends TableProps {
   /**
@@ -192,12 +208,12 @@ export function Table<RowDataType>({
       });
 
       const rowActions =
-        actions?.map((props, actionIndex) => {
+        actions?.map((actionProps, actionIndex) => {
           const coords = [rowIndex, actionIndex];
-
+          const size = actionProps.size || props.size;
           return (
             <TableCell align="center" key={"action-" + String(coords)}>
-              <span onClick={() => props.onClick(row)}>{props.icon}</span>
+              {renderAction<RowDataType>({ ...actionProps, size, row, coords })}
             </TableCell>
           );
         }) || [];
@@ -235,3 +251,27 @@ export function Table<RowDataType>({
 Table.defaultProps = {
   defaultSortField: "",
 };
+
+// --------------- 𝕌𝕥𝕚𝕝𝕤 ---------------
+
+function renderAction<RowDataType>(actionProps: RenderActionType<RowDataType>) {
+  if (actionProps.content) {
+    return actionProps.content({
+      rowData: actionProps.row,
+      coords: actionProps.coords,
+    });
+  } else if (actionProps.icon) {
+    return (
+      <Tooltip title={<>{actionProps.tooltip}</>}>
+        <IconButton
+          size={actionProps.size}
+          onClick={(e) => {
+            actionProps.onClick?.(actionProps.row, e);
+          }}
+        >
+          {actionProps.icon}
+        </IconButton>
+      </Tooltip>
+    );
+  } else return null;
+}
