@@ -1,7 +1,7 @@
 // Table.stories.ts|tsx
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Table } from ".";
+import { Table, TableOptions } from ".";
 import { Chip, Button } from "@mui/material";
 
 interface Dev {
@@ -25,6 +25,11 @@ const Template: ComponentStory<typeof Table> = (args) => <Table {...args} />;
 
 export const Default = Template.bind({});
 
+const options: TableOptions = {
+  sorting: false,
+  paging: false,
+};
+
 const data: Dev[] = [
   { name: "João Pedro", occupation: "Web programmer", frameworks: ["React"] },
   { name: "Samuel", occupation: "Web programmer", frameworks: ["React"] },
@@ -40,6 +45,7 @@ const data: Dev[] = [
 
 Default.args = {
   /*👇 The args you need here will depend on your component */
+  options,
   defaultSortField: "name",
   count: data.length,
   columns: [

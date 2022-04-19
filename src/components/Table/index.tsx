@@ -10,7 +10,12 @@ import {
   TableSortLabel,
   TablePagination,
 } from "./styles";
-import { IconButton, TableProps, Tooltip } from "@mui/material";
+import {
+  IconButton,
+  TableProps,
+  TablePaginationBaseProps,
+  Tooltip,
+} from "@mui/material";
 import { usePagination, useSortData, extractLens } from "jpa-ts-utils";
 
 // 𝕋𝕪𝕡𝕖𝕤
@@ -77,6 +82,21 @@ export interface Column<RowDataType = object> {
   renderCell?: ColumnRenderCell<RowDataType>;
 }
 
+export interface TableOptions {
+  /**
+   * Show and hide the pagination
+   *
+   * @default 'true'
+   */
+  paging?: boolean;
+  /**
+   * Show and hide the sorting
+   *
+   * @default 'true'
+   */
+  sorting?: boolean;
+}
+
 export interface TableAction<RowDataType = object> {
   /**
    * Action hint
@@ -119,7 +139,15 @@ export interface Props<RowDataType = object> extends TableProps {
    */
   columns: Column<RowDataType>[];
   data: RowDataType[];
+  /**
+   * Table list actions
+   *
+   */
   actions?: TableAction<RowDataType>[];
+  /**
+   * Used to customize table utilities
+   */
+  options?: TableOptions;
   /**
    * Default initial page
    *
@@ -129,18 +157,32 @@ export interface Props<RowDataType = object> extends TableProps {
   /**
    * Default initial sort field
    */
-  defaultSortField: string;
+  defaultSortField?: string;
   /**
    * Count of records
    */
-  count: number;
+  count?: number;
   /**
    * Control hover effect
    *
    * @default `false`
    */
   hover?: boolean;
+  /**
+   * Paginator props
+   *
+   * @default `{}`
+   *
+   */
+  paginationProps?: TablePaginationBaseProps;
 }
+
+// 𝕄𝕖𝕥𝕒𝕕𝕒𝕥𝕒
+
+const DEFAULT_OPTIONS: TableOptions = {
+  paging: true,
+  sorting: true,
+};
 
 // 𝕄𝕒𝕚𝕟
 
@@ -148,18 +190,21 @@ export function Table<RowDataType>({
   columns,
   data,
   actions,
+  options: tableOptions,
   defaultPage,
   defaultSortField,
   count,
   ...props
 }: Props<RowDataType>) {
+  const options = { ...DEFAULT_OPTIONS, ...tableOptions };
+
   const pagination = usePagination({
     initialPage: defaultPage || 0,
     initialRowsPerpage: 10,
   });
 
   const { currentSort, onSortChange, sortData } = useSortData<RowDataType>({
-    initialField: defaultSortField,
+    initialField: defaultSortField || "",
     initialOrder: "asc",
   });
 
@@ -171,7 +216,7 @@ export function Table<RowDataType>({
 
     const headers = columns.map((column) => (
       <TableCell align={column.align} key={column.field}>
-        {column.sorting === false ? (
+        {options.sorting === false || column.sorting === false ? (
           column.title
         ) : (
           <TableSortLabel
@@ -230,7 +275,7 @@ export function Table<RowDataType>({
 
       return (
         <TableRow hover={props.hover} key={rowIndex}>
-          {rowCells.concat(rowActions)}
+          {[...rowCells, ...rowActions]}
         </TableRow>
       );
     });
@@ -245,26 +290,25 @@ export function Table<RowDataType>({
           <TableRow>{renderHead()}</TableRow>
         </TableHead>
         <TableBody>{renderRows()}</TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              count={count}
-              onPageChange={pagination.onChangePage}
-              onRowsPerPageChange={pagination.onChangeRowsPerPage}
-              rowsPerPageOptions={pagination.rowsPerPageOptions}
-              rowsPerPage={pagination.rowsPerPage}
-              page={pagination.page}
-            />
-          </TableRow>
-        </TableFooter>
+        {options.paging && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                count={count || 0}
+                onPageChange={pagination.onChangePage}
+                onRowsPerPageChange={pagination.onChangeRowsPerPage}
+                rowsPerPageOptions={pagination.rowsPerPageOptions}
+                rowsPerPage={pagination.rowsPerPage}
+                page={pagination.page}
+                {...props.paginationProps}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </StyledTable>
     </TableContainer>
   );
 }
-
-Table.defaultProps = {
-  defaultSortField: "",
-};
 
 // --------------- 𝕌𝕥𝕚𝕝𝕤 ---------------
 
