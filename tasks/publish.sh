@@ -16,7 +16,7 @@ fi
 rm -rf dist
 
 # Compile
-npm run build
+yarn build
 
 # Go!
-npm publish
+yarn publish
