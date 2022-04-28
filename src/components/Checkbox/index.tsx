@@ -19,7 +19,10 @@ export const Checkbox: React.FC<CheckboxCustomProps> = ({
 }) => {
   return (
     <>
-      <FormControlLabel label={label} control={<MuiCheckbox {...props} />} />
+      <FormControlLabel
+        label={label}
+        control={<MuiCheckbox checked={!!props.value} {...props} />}
+      />
       {helperText && (
         <FormHelperText error={error}>{helperText}</FormHelperText>
       )}

@@ -36,6 +36,7 @@ const initialData = {
   email: "joao.alves1032003@gmail.com",
   password: "joaopedro",
   confirmPassword: "joaopedro",
+  acceptTerms: true,
 };
 
 //👇 This default export determines where your story goes in the story list

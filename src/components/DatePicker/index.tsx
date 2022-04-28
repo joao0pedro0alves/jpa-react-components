@@ -13,13 +13,16 @@ import { TextField, TextFieldCustomProps } from "../TextField";
 
 type DateValue = string | Date | null;
 
-export type DatePickerCustomProps = {
-  value?: string | Date;
+// @ts-ignore
+export interface DatePickerCustomProps extends DatePickerProps<DateValue> {
   name: string;
-  onChange?: (event: unknown, date: DateValue, inputName: string) => void;
+  value?: DateValue;
   inputComponentProps?: TextFieldCustomProps;
-  datePickerComponentProps?: DatePickerProps<DateValue>;
   children?: React.ReactNode;
+  onChange?: (date: DateValue, keyboardInputValue?: string | undefined) => void;
+  renderInput?: (
+    props: TextFieldCustomProps
+  ) => React.ReactElement<any, string | React.JSXElementConstructor<any>>;
   /** DateIO adapter class function */
   dateAdapter?: new (...args: any) => MuiPickersAdapter<unknown>;
   /** Formats that are used for any child pickers */
@@ -33,7 +36,7 @@ export type DatePickerCustomProps = {
   dateLibInstance?: any;
   /** Locale for the date library you are using */
   locale?: string | object;
-};
+}
 
 /**
  * Docs:
@@ -47,11 +50,11 @@ export const DatePicker: React.FC<DatePickerCustomProps> = ({
   value,
   onChange,
   inputComponentProps,
-  datePickerComponentProps,
   ...props
 }) => {
   const handleChange = (date: string | Date | null) => {
     if (onChange && date) {
+      // @ts-ignore
       onChange(null, date, name);
     }
   };
@@ -61,7 +64,6 @@ export const DatePicker: React.FC<DatePickerCustomProps> = ({
   return (
     <MuiLocalizationProvider {...props} dateAdapter={dateAdapter}>
       <MuiDatePicker
-        {...datePickerComponentProps}
         value={value || null}
         onChange={handleChange}
         renderInput={(params) => (

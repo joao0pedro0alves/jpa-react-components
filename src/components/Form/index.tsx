@@ -19,7 +19,7 @@ export interface FormContextType<T = object> {
     separationChar?: string
   ) => void;
   setFieldError: (fieldName: never, value: never) => void;
-  getFieldValue: (fieldName: string, separationChar?: string) => void;
+  getFieldValue: (fieldName: string, separationChar?: string) => any;
   /**
    *
    * @param {string} separationChar - Character used to separate the string and assemble the required scope
