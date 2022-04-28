@@ -313,26 +313,33 @@ export function Table<RowDataType>({
 // --------------- 𝕌𝕥𝕚𝕝𝕤 ---------------
 
 function renderAction<RowDataType>(actionProps: RenderActionType<RowDataType>) {
+  const disabled = actionProps.getDisabled?.(actionProps.row);
+
   if (actionProps.content) {
     return actionProps.content({
       rowData: actionProps.row,
       coords: actionProps.coords,
     });
   } else if (actionProps.icon) {
-    return (
-      <Tooltip title={<>{actionProps.tooltip}</>}>
-        <IconButton
-          size={actionProps.size}
-          disabled={actionProps.getDisabled?.(actionProps.row)}
-          onClick={(e) => {
-            actionProps.onClick?.(actionProps.row, e);
-          }}
-        >
-          {typeof actionProps.icon === "function"
-            ? actionProps.icon(actionProps.row)
-            : actionProps.icon}
-        </IconButton>
-      </Tooltip>
+    const button = (
+      <IconButton
+        size={actionProps.size}
+        disabled={disabled}
+        onClick={(e) => {
+          actionProps.onClick?.(actionProps.row, e);
+        }}
+      >
+        {typeof actionProps.icon === "function"
+          ? actionProps.icon(actionProps.row)
+          : actionProps.icon}
+      </IconButton>
+    );
+
+    // Fixes => MUI: You are providing a disabled `button` child to the Tooltip
+    return disabled ? (
+      button
+    ) : (
+      <Tooltip title={<>{actionProps.tooltip}</>}>{button}</Tooltip>
     );
   } else return null;
 }
