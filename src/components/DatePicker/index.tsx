@@ -62,13 +62,14 @@ export const DatePicker: React.FC<DatePickerCustomProps> = ({
   const dateAdapter = props.dateAdapter || MuiAdapaterDateFns;
 
   return (
-    <MuiLocalizationProvider {...props} dateAdapter={dateAdapter}>
+    <MuiLocalizationProvider locale={props.locale} dateAdapter={dateAdapter}>
       <MuiDatePicker
         value={value || null}
         onChange={handleChange}
         renderInput={(params) => (
           <TextField name={name} {...params} {...inputComponentProps} />
         )}
+        {...props}
       />
     </MuiLocalizationProvider>
   );
