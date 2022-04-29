@@ -1,5 +1,3 @@
-export { theme as darkTheme } from "./styles/theme/dark";
-
 // Core components
 export { Table } from "./components/Table";
 
