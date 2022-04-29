@@ -2,6 +2,7 @@
 .vscode
 node_modules
 src
+tasks
 .comments.txt
 *.log
 yarn.lock
