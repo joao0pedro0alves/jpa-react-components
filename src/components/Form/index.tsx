@@ -99,6 +99,7 @@ const useForm = ({ initialValues = {}, isReadOnlyForm = false } = {}) => {
     ) => {
       if (isReadOnlyForm) return;
       const isValid = (v?: string) => v === undefined && event !== null;
+
       let name = isValid(inputName) ? event?.target.name : inputName;
       let value = isValid(inputValue) ? event?.target.value : inputValue;
 

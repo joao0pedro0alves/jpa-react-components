@@ -28,4 +28,5 @@ Default.args = {
   label: "Country",
   emptyOption: "Select your origin country",
   options: countries,
+  fullWidth: true,
 };

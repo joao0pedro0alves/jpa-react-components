@@ -1,4 +1,5 @@
 import React from "react";
+import { MenuItem } from "@mui/material";
 import TextField, { TextFieldCustomProps } from "../TextField";
 import { Option } from "../../types";
 
@@ -15,16 +16,20 @@ export const Select: React.FC<SelectCustomProps> = ({
   ...props
 }) => {
   return (
-    <TextField {...props} select SelectProps={{ native: true }}>
+    <TextField
+      {...props}
+      onChange={(e) => (props.onChange ? props.onChange(e) : undefined)}
+      select
+    >
       {emptyOption && (
-        <option disabled key="empty-option" value="">
+        <MenuItem disabled key="empty-option" value="">
           {emptyOption}
-        </option>
+        </MenuItem>
       )}
       {options.map((option, index) => (
-        <option key={index} value={option.value} disabled={option.disabled}>
+        <MenuItem key={index} value={option.value} disabled={option.disabled}>
           {option.label}
-        </option>
+        </MenuItem>
       ))}
     </TextField>
   );
